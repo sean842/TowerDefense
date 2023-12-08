@@ -10,9 +10,9 @@ public class Node : MonoBehaviour
     public Color notEnoughMoneyColor;
 
     [HideInInspector]
-    public GameObject turret;
+    public GameObject turret;// the turret.
     [HideInInspector]
-    public TurretBluePrint turretBluePrint;
+    public TurretBluePrint turretBluePrint; // the turret class
     [HideInInspector]
     public bool isUpgraded = false;
 
@@ -102,6 +102,15 @@ public class Node : MonoBehaviour
 
         Debug.Log("turret Upgraded ");
 
+    }
+
+    public void SellTurret() {
+        PlayerStat.Money += turretBluePrint.GetSellAmount();
+        // span cool effect.
+        GameObject effect = (GameObject)Instantiate(buildManager.sellEffect, GetBuildPosition(), Quaternion.identity);
+
+        Destroy(turret);
+        turretBluePrint = null;
     }
 
     private void OnMouseEnter() {
