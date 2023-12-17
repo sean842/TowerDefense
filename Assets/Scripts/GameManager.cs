@@ -2,14 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static bool GameIsOver = false;
     public GameObject GameOverUI;
+    public GameObject CompleteLevelUI;
+    public GameObject finishedGameUI;
+
+    //public int currentLevel = 1;
+
+    public int nextSceneIndex = 0;
+
+
+    //public SceneFader SceneFader;
 
     private void Start() {
         GameIsOver = false;
+        nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
     }
 
     // Update is called once per frame
@@ -30,12 +41,19 @@ public class GameManager : MonoBehaviour
 
     void EndGame() {
         GameIsOver = true;
-        Debug.Log("Game Over");
         GameOverUI.SetActive(true);
     }
 
-    public static explicit operator GameObject(GameManager v)
-    {
-        throw new NotImplementedException();
+    public void WinLevel() {
+        //currentLevel++;
+        GameIsOver = true;
+        CompleteLevelUI.SetActive(true);
     }
+
+    public void FinishedGame() {
+        Debug.Log("finishhhh");
+        GameIsOver = true;
+        finishedGameUI.SetActive(true);
+    }
+
 }

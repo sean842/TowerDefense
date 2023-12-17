@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour
     public float speed; // Speed at which the enemy moves.
     public float helth = 100;
     public int moneyValue = 50;
+<<<<<<< Updated upstream
+=======
+    private bool isAlive = false;
+
+>>>>>>> Stashed changes
     public GameObject deathEffect;
 
     private void Start()
@@ -18,9 +23,17 @@ public class Enemy : MonoBehaviour
         speed = startSpeed;
     }
 
+<<<<<<< Updated upstream
     public void TakeDamage(float amount) { 
         helth -= amount;
         if (helth <= 0) {
+=======
+    public void TakeDamage(float amount) {
+        health -= amount;
+        healthBar.fillAmount = health / startHealth;
+
+        if (health <= 0 && !isAlive) {
+>>>>>>> Stashed changes
             Die();
         }
 
@@ -32,8 +45,10 @@ public class Enemy : MonoBehaviour
 
     void Die() {
         PlayerStat.Money += moneyValue;// add money to player.
+        WaveSpawnerScript.numEnemiesAlive--; // deacrease the number of enemies alive.
         // make a death effect.
         GameObject effect = (GameObject) Instantiate(deathEffect, transform.position, Quaternion.identity);
+
         // Destroy the enemy & death effect.    
         Destroy(effect, 5f);
         Destroy(gameObject);
