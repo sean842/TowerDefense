@@ -11,8 +11,8 @@ public class TarrutScript : MonoBehaviour
     // 2. set teh turret in the position of the nearest enemy.
     // 3. shoot the enemy.
 
-    private Transform target;
-    private Enemy targetEnemyCompo;
+    private Transform target; // the transform of the enemy.
+    private Enemy targetEnemyCompo; // the enemy.
 
     [Header("Generals")]
     public float range = 15f;// rang for the Gizmo Sphere.
@@ -86,7 +86,7 @@ public class TarrutScript : MonoBehaviour
         if (useLaser) {
             Laser();
         } else {
-            if (fireCountdown <= 0f) {
+            if (fireCountdown <= 0f && target != null) {
                 Shoot();
                 fireCountdown = 1f / fireRate;
             }
@@ -99,17 +99,13 @@ public class TarrutScript : MonoBehaviour
 
     void LockOnTarget()
     {
-        Debug.Log("6666666ion");
-
-        if (transform != null) {
+        if (transform != null && target != null) {
             // rotation fo the turret.
             Vector3 dir = target.position - transform.position;
             Quaternion lookRrotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRrotation, Time.deltaTime * turnSpeed).eulerAngles;
             partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-            Debug.Log("rotation");
         }
-        Debug.Log("2323rotation");
 
     }
 
