@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WaveSpawnerScript : MonoBehaviour
 {
@@ -22,6 +20,7 @@ public class WaveSpawnerScript : MonoBehaviour
     public TextMeshProUGUI waveCountDownText;
     private int waveIndex = 0;
 
+    public GameManager gameManager;
 
     private void Update() {
         
@@ -46,6 +45,7 @@ public class WaveSpawnerScript : MonoBehaviour
     IEnumerator SpawnWave() {
         PlayerStat.wavwSurvived++;
         Wave wave = waves[waveIndex];
+        enemiesAlive = wave.count;
 
         for (int i = 0; i < wave.count; i++) {
             SpawnEnemy(wave.enemy);
@@ -54,7 +54,7 @@ public class WaveSpawnerScript : MonoBehaviour
         waveIndex++;
 
         if (waveIndex == waves.Length) {
-            Debug.Log("gsme won");
+            gameManager.WinLevel();
             this.enabled = false; // we enable this script.
         }
     }
@@ -62,7 +62,6 @@ public class WaveSpawnerScript : MonoBehaviour
 
     void SpawnEnemy(GameObject enemy) {
         Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
-        enemiesAlive++;
     }
 
 }
