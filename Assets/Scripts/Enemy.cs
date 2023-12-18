@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         GameObject effect = (GameObject) Instantiate(deathEffect, transform.position, Quaternion.identity);
         // Destroy the enemy & death effect.    
         Destroy(effect, 5f);
+        WaveSpawnerScript.enemiesAlive--;
         Destroy(gameObject);
     }
 

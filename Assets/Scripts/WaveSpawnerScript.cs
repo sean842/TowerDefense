@@ -11,7 +11,9 @@ public class WaveSpawnerScript : MonoBehaviour
     // We will spawn them with 0.5 sec' between every enemy spawning.
     // We span a wave of enemies every few sec'.
 
-    public Transform enemyPrefab;
+    public static int enemiesAlive = 0;
+
+    public Wave[] waves;
     public Transform spawnPoint;
 
     public float timeBetweenWaves = 20f;
@@ -20,11 +22,17 @@ public class WaveSpawnerScript : MonoBehaviour
     public TextMeshProUGUI waveCountDownText;
     private int waveIndex = 0;
 
+
     private void Update() {
         
+        if(enemiesAlive > 0) {
+            return;
+        }
+
         if(countDown <= 0f) {
             StartCoroutine(SpawnWave());
             countDown = timeBetweenWaves;
+            return;
         }
 
         countDown -= Time.deltaTime;
@@ -36,19 +44,25 @@ public class WaveSpawnerScript : MonoBehaviour
 
     // Spawning a wave of enemies with 0.5 sec' between.
     IEnumerator SpawnWave() {
-        waveIndex++;
         PlayerStat.wavwSurvived++;
+        Wave wave = waves[waveIndex];
 
-        for (int i = 0; i < waveIndex; i++) {
-            SpawnEnemy();
-            yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < wave.count; i++) {
+            SpawnEnemy(wave.enemy);
+            yield return new WaitForSeconds(1/wave.rate);
         }
+        waveIndex++;
 
+        if (waveIndex == waves.Length) {
+            Debug.Log("gsme won");
+            this.enabled = false; // we enable this script.
+        }
     }
 
 
-    void SpawnEnemy() {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+    void SpawnEnemy(GameObject enemy) {
+        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+        enemiesAlive++;
     }
 
 }
