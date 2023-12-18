@@ -5,14 +5,12 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
 
-<<<<<<< Updated upstream
     public TextMeshProUGUI waveText;
-=======
-    public SceneFader SceneFader;
-    public string menuSceneName = "MainMenu";
 
->>>>>>> Stashed changes
-
+    void OnEnable()
+    {
+        waveText.text = PlayerStat.wavwSurvived.ToString();
+    }
 
     public void Retry() { 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

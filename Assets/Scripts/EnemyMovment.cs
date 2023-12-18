@@ -43,7 +43,6 @@ public class EnemyMovment : MonoBehaviour
         PlayerStat.Lives--;
         // Destroy the enemy when it reaches the last waypoint.
         Destroy(gameObject);
-        WaveSpawnerScript.numEnemiesAlive--; // deacrease the number of enemies alive.
 
     }
 
