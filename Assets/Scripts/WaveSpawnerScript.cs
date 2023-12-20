@@ -27,8 +27,12 @@ public class WaveSpawnerScript : MonoBehaviour
         if(enemiesAlive > 0) {
             return;
         }
+        if (waveIndex == waves.Length) {
+            gameManager.WinLevel();
+            this.enabled = false; // we enable this script.
+        }
 
-        if(countDown <= 0f) {
+        if (countDown <= 0f) {
             StartCoroutine(SpawnWave());
             countDown = timeBetweenWaves;
             return;
@@ -53,10 +57,6 @@ public class WaveSpawnerScript : MonoBehaviour
         }
         waveIndex++;
 
-        if (waveIndex == waves.Length) {
-            gameManager.WinLevel();
-            this.enabled = false; // we enable this script.
-        }
     }
 
 

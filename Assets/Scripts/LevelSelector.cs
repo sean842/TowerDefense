@@ -22,5 +22,7 @@ public class LevelSelector : MonoBehaviour
 
     public void Select(string LevelName) {
         sceneFader.FadeTo(LevelName);
+
+        
     }
 }
